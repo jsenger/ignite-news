@@ -50,6 +50,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             const checkoutSession = event.data
               .object as Stripe.Checkout.Session
 
+            await saveSubscription(
+              checkoutSession.subscription.toString(),
+              checkoutSession.customer.toString()
+            )
+
             break
           default:
             throw new Error('Unhandled event.')
