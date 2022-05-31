@@ -5,7 +5,18 @@ import Head from 'next/head'
 import styles from './styles.module.scss'
 import { RichText } from 'prismic-dom'
 
-export default function Posts() {
+type Post = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updatedAt: string;
+}
+
+interface PostsProps {
+  posts: Post[]
+}
+
+export default function Posts({ posts }: PostsProps) {
   return (
     <>
       <Head>
@@ -14,21 +25,13 @@ export default function Posts() {
 
       <main className={styles.container}>
         <div className={styles.posts}>
-          <a href="">
-            <time>12 de março de 2022</time>
-            <strong>Título bla bla bla</strong>
-            <p>Parágrafo do post.</p>
-          </a>
-          <a href="">
-            <time>12 de março de 2022</time>
-            <strong>Título bla bla bla</strong>
-            <p>Parágrafo do post.</p>
-          </a>
-          <a href="">
-            <time>12 de março de 2022</time>
-            <strong>Título bla bla bla</strong>
-            <p>Parágrafo do post.</p>
-          </a>
+          { posts.map( post => (
+            <a href="#" key={post.slug}>
+              <time>{post.updatedAt}</time>
+              <strong>{post.title}</strong>
+              <p>{post.excerpt}</p>
+            </a>
+          ) ) }
         </div>
       </main>
     </>
